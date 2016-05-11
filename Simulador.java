@@ -1,7 +1,3 @@
-package TF;
-
-import TF.*;
-
 public class Simulador{
 	String file , origem, destino,mensagem;
 	public static void main(String file,String origem,String destino,String mensagem){

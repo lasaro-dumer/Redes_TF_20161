@@ -1,5 +1,3 @@
-package TF;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,7 +5,7 @@ import java.io.IOException;
 public class Reader{
 
 	public Reader(){
-		
+
 	}
 	public String read(String file){
 		StringBuilder sb = new StringBuilder();
