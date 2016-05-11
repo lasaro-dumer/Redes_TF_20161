@@ -4,9 +4,7 @@ JC = javac
 .java.class:
 	$(JC) $(JFLAGS) $*.java
 
-CLASSES = \
-	Reader.java \
-	Simulador.java \
+CLASSES = *.java \
 
 default: classes
 
@@ -14,3 +12,6 @@ classes: $(CLASSES:.java=.class)
 
 clean:
 	$(RM) *.class
+
+run: default
+	java Simulador topologia.txt
