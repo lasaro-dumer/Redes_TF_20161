@@ -5,6 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Reader{
+
+	public Reader(){
+		
+	}
 	public String read(String file){
 		StringBuilder sb = new StringBuilder();
 		try(BufferedReader br = new BufferedReader(new FileReader(file))) {
