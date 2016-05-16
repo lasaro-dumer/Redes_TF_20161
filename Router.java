@@ -9,7 +9,9 @@ public class Router{
 	ArrayList<Port> ports;
 	Map<String,TE> routerTable;
 
-	public Router(){
+	public Router(String name,int nports){
+		this.name = name;
+		this.nports = nports;
 		routerTable = new HashMap<String,TE>();
 		ports = new ArrayList<Port>();
 	}
