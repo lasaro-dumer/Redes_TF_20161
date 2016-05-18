@@ -1,17 +1,17 @@
-JFLAGS = -g
+JFLAGS = -g -d bin/
 JC = javac
 .SUFFIXES: .java .class
 .java.class:
 	$(JC) $(JFLAGS) $*.java
 
-CLASSES = *.java \
+CLASSES = src/*.java \
 
 default: classes
 
 classes: $(CLASSES:.java=.class)
 
 clean:
-	$(RM) *.class
+	find . -name \*.class -type f -delete
 
 run: default
-	java Simulador topologia.txt
+	java -cp bin Simulador topologia.txt
