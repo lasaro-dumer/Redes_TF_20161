@@ -14,4 +14,4 @@ clean:
 	find . -name \*.class -type f -delete
 
 run: default
-	java -cp bin Simulador topologia.txt
+	java -cp bin Simulador topologia.txt n1 n2 helloworld
