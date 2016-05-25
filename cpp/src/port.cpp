@@ -11,6 +11,6 @@ port& port::operator=( const port& p )
 //*/
 string port::toString(){
     stringstream ss;
-    ss << this->mac << ","<< this->ip << "," << this->mtu;
+    ss << this->mac << ","<< this->ip->getAsHumanReadable() << "," << this->mtu;
     return ss.str();
 }

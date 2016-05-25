@@ -10,7 +10,7 @@
 using namespace std;
 class router: public networkElement{
     int nPorts;
-    vector<port*> ports;
+    map<int,port*> ports;
     map<string,te*> routerTable;
 public:
     virtual ~router(){};

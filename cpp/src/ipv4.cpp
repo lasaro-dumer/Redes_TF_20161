@@ -18,7 +18,7 @@ unsigned int ipv4::getAsBits(){
     return this->asBits;
 }
 string ipv4::getAsBitsString(){
-    return bitset<32>(this->getAsBits()).to_string();
+    return ipv4AsBitsString(this->getAsBits());
 }
 string ipv4::getAsHumanReadable(){
     return this->ip_v4;

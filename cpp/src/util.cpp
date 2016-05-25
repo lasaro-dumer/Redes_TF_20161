@@ -35,6 +35,9 @@ unsigned int ipv4AsBits(string ip){
     unsigned int p4 = stoul(s[3],nullptr,10);
     return p1 ^ p2 ^ p3 ^ p4;
 }
+string ipv4AsBitsString(unsigned int ip){
+    return bitset<32>(ip).to_string();
+}
 string ipv4AsBitsString(string ip){
-    return bitset<32>(ipv4AsBits(ip)).to_string();
+    return ipv4AsBitsString(ipv4AsBits(ip));
 }

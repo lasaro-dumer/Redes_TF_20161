@@ -4,6 +4,7 @@
 #include <sstream>
 #include "networkElement.hpp"
 #include "port.hpp"
+#include "ipv4.hpp"
 using namespace std;
 
 class node : public networkElement{
@@ -14,7 +15,8 @@ public:
 		p=new port(m,i,mt,1);
 	}
 	node(string n,port* pt,string g):networkElement(n,"node"),p(pt),gateway(g){}
-	string getIP(void) { return this->p->getIP(); }
+	string getIPAsHumanReadable(void) { return this->p->getIPAsHumanReadable(); }
+	ipv4* getIP(void) { return this->p->getIP(); }
 	string getMAC(void) { return this->p->getMAC(); }
 	int getMTU(void){ return this->p->getMTU(); }
 	string getGateway(void) { return this->gateway; }

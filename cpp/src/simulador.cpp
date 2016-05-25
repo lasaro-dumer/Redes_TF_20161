@@ -33,7 +33,7 @@ int main(int argc, char const *argv[]) {
     cout << "m="<<m << endl;
     //*/
 
-    /* TO PRINT DE PARSED ELEMENTS, COMMENT THIS LINE
+    ///* TO PRINT DE PARSED ELEMENTS, COMMENT THIS LINE
     std::cout << "nodes"<< std::endl;
     vector<node*>::iterator i;
     vector<node*> ns = p.getNodes();
