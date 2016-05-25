@@ -40,7 +40,8 @@ void parser::parseFile(char* fileName){
                         int mtu = stoi(s[3],nullptr,10);
                         string gateway = s[4];
                         node* n = new node(name,mac,ip,mtu,gateway);
-                        this->netNodes.push_back(n);
+                        //this->netNodes.push_back(n);
+                        this->networkObjects.push_back(n);
                         //std::cout << "n="<<n.toString() << std::endl;
                         break;
                     }
@@ -58,7 +59,8 @@ void parser::parseFile(char* fileName){
                             r->addPort(p);
                             pn++;
                         }
-                        this->netRouters.push_back(r);
+                        //this->netRouters.push_back(r);
+                        this->networkObjects.push_back(r);
                         //std::cout << "r="<<r.toString() << std::endl;
                         break;
                     }
@@ -68,17 +70,14 @@ void parser::parseFile(char* fileName){
         				string netDest =s[1];
         				string nextHop =s[2];
         				int portNumber=stoi(s[3],nullptr,10);
-                        std::vector<router*>::iterator iter, end;
-                        for(iter = netRouters.begin(), end = netRouters.end() ; iter != end; ++iter) {
-                            if ((*iter)->getName() == routerName) {
-                                port* p=(*iter)->getPortByNumber(portNumber);
-                                if(p != nullptr){
-                                    te* entry = new te(netDest,nextHop,p);
-                                    (*iter)->addRouterTableEntry(entry);
-                                }
-                                //std::cout << r.getName() << std::endl;
-                                break;
+                        router* r = this->getRouterByName(routerName);
+                        if(r != nullptr){
+                            port* p= r->getPortByNumber(portNumber);
+                            if(p != nullptr){
+                                te* entry = new te(netDest,nextHop,p);
+                                r->addRouterTableEntry(entry);
                             }
+                            //std::cout << r.getName() << std::endl;
                         }
                         break;
                     }
@@ -88,4 +87,45 @@ void parser::parseFile(char* fileName){
         }
     }
 	myReadFile.close();
+}
+
+vector<node*> parser::getNodes(){
+    vector<node*> nodes;
+    vector<networkElement*>::iterator noi;
+    for (noi = this->networkObjects.begin(); noi != this->networkObjects.end(); ++noi) {
+        if((*noi)->getType()=="node"){
+            nodes.push_back(dynamic_cast<node*>((*noi)));
+        }
+    }
+    return nodes;
+}
+
+vector<router*> parser::getRouters(){
+    vector<router*> routers;
+    vector<networkElement*>::iterator noi;
+    for (noi = this->networkObjects.begin(); noi != this->networkObjects.end(); ++noi) {
+        if((*noi)->getType()=="router"){
+            routers.push_back(dynamic_cast<router*>((*noi)));
+        }
+    }
+    return routers;
+}
+
+networkElement* parser::getElementByName(string name,string type){
+    vector<networkElement*>::iterator noi;
+    for (noi = this->networkObjects.begin(); noi != this->networkObjects.end(); ++noi) {
+        if((type=="any" || (*noi)->getType()==type)
+            && (*noi)->getName()==name){
+            return *noi;
+        }
+    }
+    return nullptr;
+}
+
+router* parser::getRouterByName(string name){
+    return dynamic_cast<router*>(this->getElementByName(name,"router"));
+}
+
+node* parser::getNodeByName(string name){
+    return dynamic_cast<node*>(this->getElementByName(name,"node"));
 }

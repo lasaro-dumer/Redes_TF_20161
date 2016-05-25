@@ -1,6 +1,8 @@
 #include <iostream>
+#include <string>
 #include "parser.hpp"
 #include "ipv4.hpp"
+#include "util.hpp"
 using namespace std;
 
 int main(int argc, char const *argv[]) {
@@ -8,20 +10,40 @@ int main(int argc, char const *argv[]) {
     char* n1 = (char*)"";
     char* n2 = (char*)"";
     char* m = (char*)"";
+    node* nN1;
+    node* nN2;
     parser p;
     for (int i = 0; i < argc; i++) {
         cout << "argv["<<i<<"]:"<<argv[i] << endl;
     }
     if (argc>1) {
         file = (char*)argv[1];
-        //parse file
-        p.parseFile(file);
+        if(fileExists(string(file))){
+            //parse file
+            p.parseFile(file);
+        }else{
+            std::cout << "File doesn't exist" << std::endl;
+            return 1;
+        }
+    }else{
+        std::cout << "Inform a file name" << std::endl;
+        return 1;
     }
     if (argc>2) {
         n1 = (char*)argv[2];
+        nN1 = p.getNodeByName(n1);
+        if(nN1 == nullptr){
+            std::cout << "Source node ["<<n1<<"] not found" << std::endl;
+            return 1;
+        }
     }
     if (argc>3) {
         n2 = (char*)argv[3];
+        nN2 = p.getNodeByName(n2);
+        if(nN2 == nullptr){
+            std::cout << "Destination node ["<<n2<<"] not found" << std::endl;
+            return 1;
+        }
     }
     if (argc>4) {
         m = (char*)argv[4];
@@ -33,7 +55,7 @@ int main(int argc, char const *argv[]) {
     cout << "m="<<m << endl;
     //*/
 
-    ///* TO PRINT DE PARSED ELEMENTS, COMMENT THIS LINE
+    /* TO PRINT DE PARSED ELEMENTS, COMMENT THIS LINE
     std::cout << "nodes"<< std::endl;
     vector<node*>::iterator i;
     vector<node*> ns = p.getNodes();

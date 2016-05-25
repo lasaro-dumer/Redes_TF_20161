@@ -3,7 +3,8 @@
 #include <vector>
 #include <sstream>
 #include <bitset>
-
+#include <sys/stat.h>
+#include <unistd.h>
 using namespace std;
 
 string tolowercase(string s){
@@ -40,4 +41,8 @@ string ipv4AsBitsString(unsigned int ip){
 }
 string ipv4AsBitsString(string ip){
     return ipv4AsBitsString(ipv4AsBits(ip));
+}
+bool fileExists (const std::string& name) {
+  struct stat buffer;
+  return (stat (name.c_str(), &buffer) == 0);
 }

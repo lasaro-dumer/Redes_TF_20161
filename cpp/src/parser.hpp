@@ -6,12 +6,14 @@
 #include "node.hpp"
 
 class parser{
-    //vector<networkElement> networkObjects;
-    vector<node*> netNodes;
-    vector<router*> netRouters;
+    vector<networkElement*> networkObjects;
 public:
     void parseFile(char* fileName);
-    vector<node*> getNodes(void){return this->netNodes;}
-    vector<router*> getRouters(void){return this->netRouters;}
+    networkElement* getElementByName(string name,string type = "any");
+    node* getNodeByName(string name);
+    router* getRouterByName(string name);
+    vector<networkElement*> getNetworkElements(){return this->networkObjects;}
+    vector<node*> getNodes(void);
+    vector<router*> getRouters(void);
 };
 #endif
