@@ -1,5 +1,6 @@
 #include <iostream>
 #include "parser.hpp"
+#include "ipv4.hpp"
 using namespace std;
 
 int main(int argc, char const *argv[]) {
@@ -34,17 +35,32 @@ int main(int argc, char const *argv[]) {
 
     /* TO PRINT DE PARSED ELEMENTS, COMMENT THIS LINE
     std::cout << "nodes"<< std::endl;
-    vector<node>::iterator i;
-    vector<node> ns = p.getNodes();
+    vector<node*>::iterator i;
+    vector<node*> ns = p.getNodes();
     for(i=ns.begin(); i != ns.end(); ++i){
-        std::cout << i->toString() << std::endl;
+        std::cout << (*i)->toString() << std::endl;
     }
     std::cout << "routers"<< std::endl;
-    vector<router>::iterator ii;
-    vector<router> rs = p.getRouters();
+    vector<router*>::iterator ii;
+    vector<router*> rs = p.getRouters();
     for(ii=rs.begin(); ii != rs.end(); ++ii){
-        std::cout << ii->toString() << std::endl;
+        std::cout << (*ii)->toString() << std::endl;
     }
+    //*/
+    /* TO TEST IPv4 UTILITIES
+    //ipv4* mIp=new ipv4(string(n1));
+    ipv4* mIp=new ipv4("129.129.129.129");
+    std::cout << "mIp as is  ="<<mIp->getAsHumanReadable() << std::endl;
+    std::cout << "mIp as bits="<<mIp->getAsBitsString() << std::endl;
+    mIp=new ipv4("128.255.129.1");
+    std::cout << "mIp as is  ="<<mIp->getAsHumanReadable() << std::endl;
+    std::cout << "mIp as bits="<<mIp->getAsBitsString() << std::endl;
+    mIp=new ipv4("127.129.2.255");
+    std::cout << "mIp as is  ="<<mIp->getAsHumanReadable() << std::endl;
+    std::cout << "mIp as bits="<<mIp->getAsBitsString() << std::endl;
+    mIp=new ipv4("0.255.2.255");
+    std::cout << "mIp as is  ="<<mIp->getAsHumanReadable() << std::endl;
+    std::cout << "mIp as bits="<<mIp->getAsBitsString() << std::endl;
     //*/
     cout << "END" << endl;
     return 0;

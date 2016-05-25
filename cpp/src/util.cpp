@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <bitset>
 
 using namespace std;
 
@@ -25,4 +26,15 @@ vector<string> split(string str, char delimiter) {
 	}
 
 	return internal;
+}
+unsigned int ipv4AsBits(string ip){
+    vector<string> s = split(ip,'.');
+    unsigned int p1 = stoul(s[0],nullptr,10) << 24;
+    unsigned int p2 = stoul(s[1],nullptr,10) << 16;
+    unsigned int p3 = stoul(s[2],nullptr,10) << 8;
+    unsigned int p4 = stoul(s[3],nullptr,10);
+    return p1 ^ p2 ^ p3 ^ p4;
+}
+string ipv4AsBitsString(string ip){
+    return bitset<32>(ipv4AsBits(ip)).to_string();
 }

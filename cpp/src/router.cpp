@@ -7,13 +7,12 @@ using namespace std;
 
 port* router::getPortByNumber(int pn){
     vector<port*>::iterator i;
-    port* p;
     for(i=ports.begin(); i != ports.end(); ++i){
         if ((*i)->getPortNumber() == pn) {
             return *i;
         }
     }
-    return p;
+    return nullptr;
 }
 
 void router::addPort(port* p) {
