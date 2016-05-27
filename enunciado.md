@@ -52,6 +52,7 @@ n2 rbox n2 : Received hello;
 n2 => n1 : ICMP - Echo (ping) reply (src=192.168.0.3 dst=192.168.0.2 ttl=8 data=hello);
 n1 rbox n1 : Received hello;
 ```
+[Chart](http://mscgen.js.org/?lang=msgenny&msc=wordwraparcs%3Dtrue%2Chscale%3D2.0%3B%0An1%20box%20n1%20%3A%20ARP%20-%20Who%20has%20192.168.0.3%3F%20Tell%20192.168.0.2%3B%0An2%20%3D%3E%20n1%20%3A%20ARP%20-%20192.168.0.3%20is%20at%2000%3A00%3A00%3A00%3A00%3A02%3B%0An1%20%3D%3E%20n2%20%3A%20ICMP%20-%20Echo%20(ping)%20request%20(src%3D192.168.0.2%20dst%3D192.168.0.3%20ttl%3D8%20data%3Dhello)%3B%0An2%20rbox%20n2%20%3A%20Received%20hello%3B%0An2%20%3D%3E%20n1%20%3A%20ICMP%20-%20Echo%20(ping)%20reply%20(src%3D192.168.0.3%20dst%3D192.168.0.2%20ttl%3D8%20data%3Dhello)%3B%0An1%20rbox%20n1%20%3A%20Received%20hello%3B)
 
 ```
 $ simulador topologia.txt n1 n2 helloworld
@@ -64,6 +65,7 @@ n2 => n1 : ICMP - Echo (ping) reply (src=192.168.0.3 dst=192.168.0.2 ttl=8 data=
 n2 => n1 : ICMP - Echo (ping) reply (src=192.168.0.3 dst=192.168.0.2 ttl=8 data=world);
 n1 rbox n1 : Received helloworld;
 ```
+[Chart](http://mscgen.js.org/?lang=msgenny&msc=wordwraparcs%3Dtrue%2Chscale%3D2.0%3B%0An1%20box%20n1%20%3A%20ARP%20-%20Who%20has%20192.168.0.3%3F%20Tell%20192.168.0.2%3B%0An2%20%3D%3E%20n1%20%3A%20ARP%20-%20192.168.0.3%20is%20at%2000%3A00%3A00%3A00%3A00%3A02%3B%0An1%20%3D%3E%20n2%20%3A%20ICMP%20-%20Echo%20(ping)%20request%20(src%3D192.168.0.2%20dst%3D192.168.0.3%20ttl%3D8%20data%3Dhello)%3B%0An1%20%3D%3E%20n2%20%3A%20ICMP%20-%20Echo%20(ping)%20request%20(src%3D192.168.0.2%20dst%3D192.168.0.3%20ttl%3D8%20data%3Dworld)%3B%0An2%20rbox%20n2%20%3A%20Received%20helloworld%3B%0An2%20%3D%3E%20n1%20%3A%20ICMP%20-%20Echo%20(ping)%20reply%20(src%3D192.168.0.3%20dst%3D192.168.0.2%20ttl%3D8%20data%3Dhello)%3B%0An2%20%3D%3E%20n1%20%3A%20ICMP%20-%20Echo%20(ping)%20reply%20(src%3D192.168.0.3%20dst%3D192.168.0.2%20ttl%3D8%20data%3Dworld)%3B%0An1%20rbox%20n1%20%3A%20Received%20helloworld%3B)
 ```
 $ simulador topologia.txt n1 n3 hello
 n1 box n1 : ARP - Who has 192.168.0.1? Tell 192.168.0.2;
@@ -77,6 +79,7 @@ n3 => r1 : ICMP - Echo (ping) reply (src=192.168.1.2 dst=192.168.0.2 ttl=8 data=
 r1 => n1 : ICMP - Echo (ping) reply (src=192.168.1.2 dst=192.168.0.2 ttl=7 data=hello);
 n1 rbox n1 : Received hello;
 ```
+[Chart](http://mscgen.js.org/?lang=msgenny&msc=wordwraparcs%3Dtrue%2Chscale%3D2.0%3B%0An1%20box%20n1%20%3A%20ARP%20-%20Who%20has%20192.168.0.1%3F%20Tell%20192.168.0.2%3B%0Ar1%20%3D%3E%20n1%20%3A%20ARP%20-%20192.168.0.1%20is%20at%2000%3A00%3A00%3A00%3A00%3A05%3B%0An1%20%3D%3E%20r1%20%3A%20ICMP%20-%20Echo%20(ping)%20request%20(src%3D192.168.0.2%20dst%3D192.168.1.2%20ttl%3D8%20data%3Dhello)%3B%0Ar1%20box%20r1%20%3A%20ARP%20-%20Who%20has%20192.168.1.2%3F%20Tell%20192.168.1.1%3B%0An3%20%3D%3E%20r1%20%3A%20ARP%20-%20192.168.1.2%20is%20at%2000%3A00%3A00%3A00%3A00%3A03%3B%0Ar1%20%3D%3E%20n3%20%3A%20ICMP%20-%20Echo%20(ping)%20request%20(src%3D192.168.0.2%20dst%3D192.168.1.2%20ttl%3D7%20data%3Dhello)%3B%0An3%20rbox%20n3%20%3A%20Received%20hello%3B%0An3%20%3D%3E%20r1%20%3A%20ICMP%20-%20Echo%20(ping)%20reply%20(src%3D192.168.1.2%20dst%3D192.168.0.2%20ttl%3D8%20data%3Dhello)%3B%0Ar1%20%3D%3E%20n1%20%3A%20ICMP%20-%20Echo%20(ping)%20reply%20(src%3D192.168.1.2%20dst%3D192.168.0.2%20ttl%3D7%20data%3Dhello)%3B%0An1%20rbox%20n1%20%3A%20Received%20hello%3B)
 ```
 $ simulador topologia.txt n1 n3 helloworld
 n1 box n1 : ARP - Who has 192.168.0.1? Tell 192.168.0.2;
@@ -94,6 +97,8 @@ r1 => n1 : ICMP - Echo (ping) reply (src=192.168.1.2 dst=192.168.0.2 ttl=7 data=
 r1 => n1 : ICMP - Echo (ping) reply (src=192.168.1.2 dst=192.168.0.2 ttl=7 data=world);
 n1 rbox n1 : Received helloworld;
 ```
+[Chart](http://mscgen.js.org/?lang=msgenny&msc=wordwraparcs%3Dtrue%2Chscale%3D2.0%3B%0An1%20box%20n1%20%3A%20ARP%20-%20Who%20has%20192.168.0.1%3F%20Tell%20192.168.0.2%3B%0Ar1%20%3D%3E%20n1%20%3A%20ARP%20-%20192.168.0.1%20is%20at%2000%3A00%3A00%3A00%3A00%3A05%3B%0An1%20%3D%3E%20r1%20%3A%20ICMP%20-%20Echo%20(ping)%20request%20(src%3D192.168.0.2%20dst%3D192.168.1.2%20ttl%3D8%20data%3Dhello)%3B%0An1%20%3D%3E%20r1%20%3A%20ICMP%20-%20Echo%20(ping)%20request%20(src%3D192.168.0.2%20dst%3D192.168.1.2%20ttl%3D8%20data%3Dworld)%3B%0Ar1%20box%20r1%20%3A%20ARP%20-%20Who%20has%20192.168.1.2%3F%20Tell%20192.168.1.1%3B%0An3%20%3D%3E%20r1%20%3A%20ARP%20-%20192.168.1.2%20is%20at%2000%3A00%3A00%3A00%3A00%3A03%3B%0Ar1%20%3D%3E%20n3%20%3A%20ICMP%20-%20Echo%20(ping)%20request%20(src%3D192.168.0.2%20dst%3D192.168.1.2%20ttl%3D7%20data%3Dhello)%3B%0Ar1%20%3D%3E%20n3%20%3A%20ICMP%20-%20Echo%20(ping)%20request%20(src%3D192.168.0.2%20dst%3D192.168.1.2%20ttl%3D7%20data%3Dworld)%3B%0An3%20rbox%20n3%20%3A%20Received%20helloworld%3B%0An3%20%3D%3E%20r1%20%3A%20ICMP%20-%20Echo%20(ping)%20reply%20(src%3D192.168.1.2%20dst%3D192.168.0.2%20ttl%3D8%20data%3Dhello)%3B%0An3%20%3D%3E%20r1%20%3A%20ICMP%20-%20Echo%20(ping)%20reply%20(src%3D192.168.1.2%20dst%3D192.168.0.2%20ttl%3D8%20data%3Dworld)%3B%0Ar1%20%3D%3E%20n1%20%3A%20ICMP%20-%20Echo%20(ping)%20reply%20(src%3D192.168.1.2%20dst%3D192.168.0.2%20ttl%3D7%20data%3Dhello)%3B%0Ar1%20%3D%3E%20n1%20%3A%20ICMP%20-%20Echo%20(ping)%20reply%20(src%3D192.168.1.2%20dst%3D192.168.0.2%20ttl%3D7%20data%3Dworld)%3B%0An1%20rbox%20n1%20%3A%20Received%20helloworld%3B)
+
 **Detalhes para construção do simulador:**
 
 - TTL inicial dos pacotes IP deve ser igual a 8
