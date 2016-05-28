@@ -16,10 +16,16 @@ int main(int argc, char const *argv[]) {
     for (int i = 0; i < argc; i++) {
         cout << "argv["<<i<<"]:"<<argv[i] << endl;
     }
+    /* TEST IF IPS ARE ON SAME NETWORK
+    if (argc>3){
+        ipv4* mIp1=new ipv4((argv[2]));
+        ipv4* mIp2=new ipv4((argv[3]));
+        bool same = areSameNetwork(mIp1->getAsBits(),mIp2->getAsBits());
+        std::cout << "same=" << same << std::endl;
+    }//*/
     if (argc>1) {
         file = (char*)argv[1];
         if(fileExists(string(file))){
-            //parse file
             p.parseFile(file);
         }else{
             std::cout << "File doesn't exist" << std::endl;

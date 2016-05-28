@@ -42,6 +42,29 @@ string ipv4AsBitsString(unsigned int ip){
 string ipv4AsBitsString(string ip){
     return ipv4AsBitsString(ipv4AsBits(ip));
 }
+unsigned int getNetworkFromIp(unsigned int ip){
+    //unsigned int classA = 0;
+    unsigned int classB = 128<<24;
+    unsigned int classC = 192<<24;
+    unsigned int ipClass = ip & classC;
+    if(ipClass == classC){
+        return ip & ipv4AsBits("255.255.255.0");
+    }else{
+        ipClass = ip & classB;
+        if(ipClass == classB){
+            return ip & ipv4AsBits("255.255.0.0");
+        }
+        //must be classA
+        return ip & ipv4AsBits("255.0.0.0");
+    }
+    return 0;
+}
+
+bool areSameNetwork(unsigned int ip1,unsigned int ip2){
+    unsigned int network1 = getNetworkFromIp(ip1);
+    unsigned int network2 = getNetworkFromIp(ip2);
+    return (network1 == network2);
+}
 bool fileExists (const std::string& name) {
   struct stat buffer;
   return (stat (name.c_str(), &buffer) == 0);
