@@ -4,4 +4,4 @@ default: mkbin
 mkbin:
 	mkdir -p bin
 clean:
-	rm -f $(binaries) *.gch
+	rm -f $(binaries) src/*.gch

@@ -42,6 +42,17 @@ string ipv4AsBitsString(unsigned int ip){
 string ipv4AsBitsString(string ip){
     return ipv4AsBitsString(ipv4AsBits(ip));
 }
+
+string ipv4AsHumanReadable(unsigned int ip){
+      stringstream ss;
+      unsigned int p1 = ((255 << 24) & ip) >> 24;
+      unsigned int p2 = ((255 << 16) & ip) >> 16;
+      unsigned int p3 = ((255 << 8) & ip) >> 8;
+      unsigned int p4 = (255) & ip;
+      ss << p1 << "." << p2 << "." << p3 << "." << p4;
+      return ss.str();
+}
+
 unsigned int getNetworkFromIp(unsigned int ip){
     //unsigned int classA = 0;
     unsigned int classB = 128<<24;

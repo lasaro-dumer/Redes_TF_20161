@@ -13,7 +13,7 @@ using namespace std;
 unsigned int ipv4::getAsBits(){
     if(!this->bCalculated){
         this->asBits = ipv4AsBits(this->ip_v4);
-        this->bCalculated=1;
+        this->bCalculated=true;
     }
     return this->asBits;
 }
@@ -21,5 +21,9 @@ string ipv4::getAsBitsString(){
     return ipv4AsBitsString(this->getAsBits());
 }
 string ipv4::getAsHumanReadable(){
+    if(!this->bReadable){
+        this->ip_v4 = ipv4AsHumanReadable(this->asBits);
+        this->bReadable=true;
+    }
     return this->ip_v4;
 }
