@@ -13,9 +13,6 @@ int main(int argc, char const *argv[]) {
     node* nN1;
     node* nN2;
     parser p;
-    for (int i = 0; i < argc; i++) {
-        cout << "argv["<<i<<"]:"<<argv[i] << endl;
-    }
     /* TEST IF IPS ARE ON SAME NETWORK
     if (argc>3){
         ipv4* mIp1=new ipv4((argv[2]));
@@ -23,36 +20,32 @@ int main(int argc, char const *argv[]) {
         bool same = areSameNetwork(mIp1->getAsBits(),mIp2->getAsBits());
         std::cout << "same=" << same << std::endl;
     }//*/
-    if (argc>1) {
-        file = (char*)argv[1];
-        if(fileExists(string(file))){
-            p.parseFile(file);
-        }else{
-            std::cout << "File doesn't exist" << std::endl;
-            return 1;
-        }
-    }else{
-        std::cout << "Inform a file name" << std::endl;
+    if(argc != 5){
+        cout << "Invalid arguments" << endl;
+        cout << "Input format is:" << endl;
+        cout << "\tsimulador topology.txt sourceName destName message" << endl;
         return 1;
     }
-    if (argc>2) {
-        n1 = (char*)argv[2];
-        nN1 = p.getNodeByName(n1);
-        if(nN1 == nullptr){
-            std::cout << "Source node ["<<n1<<"] not found" << std::endl;
-            return 1;
-        }
+    file = (char*)argv[1];
+    n1 = (char*)argv[2];
+    n2 = (char*)argv[3];
+    m = (char*)argv[4];
+
+    if(fileExists(string(file))){
+        p.parseFile(file);
+    }else{
+        std::cout << "File doesn't exist" << std::endl;
+        return 1;
     }
-    if (argc>3) {
-        n2 = (char*)argv[3];
-        nN2 = p.getNodeByName(n2);
-        if(nN2 == nullptr){
-            std::cout << "Destination node ["<<n2<<"] not found" << std::endl;
-            return 1;
-        }
+    nN1 = p.getNodeByName(n1);
+    if(nN1 == nullptr){
+        std::cout << "Source node ["<<n1<<"] not found" << std::endl;
+        return 1;
     }
-    if (argc>4) {
-        m = (char*)argv[4];
+    nN2 = p.getNodeByName(n2);
+    if(nN2 == nullptr){
+        std::cout << "Destination node ["<<n2<<"] not found" << std::endl;
+        return 1;
     }
     /* TO PRINT THE ARGUMENTS, COMMENT THIS LINE
     cout << "file="<<file << endl;
