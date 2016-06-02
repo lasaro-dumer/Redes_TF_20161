@@ -20,6 +20,9 @@ int main(int argc, char const *argv[]) {
         bool same = areSameNetwork(mIp1->getAsBits(),mIp2->getAsBits());
         std::cout << "same=" << same << std::endl;
     }//*/
+    #ifdef DEBUG
+    std::cout << "DEBUG" << std::endl;
+    #endif
     if(argc != 5){
         cout << "Invalid arguments" << endl;
         cout << "Input format is:" << endl;
@@ -47,14 +50,9 @@ int main(int argc, char const *argv[]) {
         std::cout << "Destination node ["<<n2<<"] not found" << std::endl;
         return 1;
     }
-    /* TO PRINT THE ARGUMENTS, COMMENT THIS LINE
-    cout << "file="<<file << endl;
-    cout << "n1="<<n1 << endl;
-    cout << "n2="<<n2 << endl;
-    cout << "m="<<m << endl;
-    //*/
-
-    /* TO PRINT DE PARSED ELEMENTS, COMMENT THIS LINE
+    #ifdef DEBUG
+    //PRINT DE PARSED ELEMENTS
+    std::cout << "Parsed elements" << endl << std::endl;
     std::cout << "nodes"<< std::endl;
     vector<node*>::iterator i;
     vector<node*> ns = p.getNodes();
@@ -67,22 +65,6 @@ int main(int argc, char const *argv[]) {
     for(ii=rs.begin(); ii != rs.end(); ++ii){
         std::cout << (*ii)->toString() << std::endl;
     }
-    //*/
-    /* TO TEST IPv4 UTILITIES
-    //ipv4* mIp=new ipv4(string(n1));
-    ipv4* mIp=new ipv4("129.129.129.129");
-    std::cout << "mIp as is  ="<<mIp->getAsHumanReadable() << std::endl;
-    std::cout << "mIp as bits="<<mIp->getAsBitsString() << std::endl;
-    mIp=new ipv4("128.255.129.1");
-    std::cout << "mIp as is  ="<<mIp->getAsHumanReadable() << std::endl;
-    std::cout << "mIp as bits="<<mIp->getAsBitsString() << std::endl;
-    mIp=new ipv4("127.129.2.255");
-    std::cout << "mIp as is  ="<<mIp->getAsHumanReadable() << std::endl;
-    std::cout << "mIp as bits="<<mIp->getAsBitsString() << std::endl;
-    mIp=new ipv4("0.255.2.255");
-    std::cout << "mIp as is  ="<<mIp->getAsHumanReadable() << std::endl;
-    std::cout << "mIp as bits="<<mIp->getAsBitsString() << std::endl;
-    //*/
-    cout << "END" << endl;
+    #endif
     return 0;
 }

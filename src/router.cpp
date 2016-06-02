@@ -103,8 +103,13 @@ string router::toString(){
     map<unsigned int,te*>::iterator ii;
     for(ii=routerTable.begin(); ii!=routerTable.end(); ++ii)
     {
-        ss << endl << (*ii).second->getNetworkDest() << ": " << (*ii).second->toString();
+        ss << endl;
+        #ifdef DEBUG
+        ss << (*ii).second->getNetworkDest() << ": ";
+        #endif
+        ss << (*ii).second->toString();
     }
+    #ifdef DEBUG
     map<unsigned int,vector<networkElement*>>::iterator nets;
     for (nets = networks.begin(); nets != networks.end(); ++nets) {
         ss << endl << "\t["<< ipv4AsHumanReadable((*nets).first) << "]";
@@ -115,5 +120,6 @@ string router::toString(){
             ss << endl << "\t\t" << (*esi)->getName();
         }
     }
+    #endif
     return ss.str();
 }

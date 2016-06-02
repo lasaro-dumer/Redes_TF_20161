@@ -104,10 +104,12 @@ void parser::tuneNetwork(){
             router* gateway = this->getRouterByIp(new ipv4(n->getGatewayIP()));
             if(gateway != nullptr){
                 gateway->connectElement(n);
+                #ifdef DEBUG
                 if(n->getGateway() == nullptr)
                     std::cout << "error on connecting node and router gateway" << std::endl;
                 else
                     std::cout << "connection successful between ["<<n->getName()<<"] and ["<<n->getGateway()->getName()<<"]" << std::endl;
+                #endif
             }
         }else if((*noi)->getType()=="router"){
             router* r = ((router*)*noi);
