@@ -96,14 +96,14 @@ int main(int argc, char const *argv[]) {
             string currMAC = current->getMacToPort(requests[0].srcHop_IP);
             string nextName = next->getName();
             string nextMAC = next->getMacToPort(&next_IP);
-            for (ireq = requests.begin(); ireq < requests.end(); ++ireq) {
+            for (ireq = requests.begin(); ireq != requests.end(); ++ireq) {
                 (*ireq).updateDataLinkInfo(currName,currMAC,nextName,nextMAC);
                 //This line print the ICMPPackage (be it request or reply)
                 std::cout << (*ireq).toString() << std::endl;
                 (*ireq).TTL--;
                 vector<ICMPPackage> slices = ICMPPackage::sliceMessage(*ireq,mtu);
                 vector<ICMPPackage>::iterator isls;
-                for (isls = slices.begin(); isls < slices.end(); ++isls)
+                for (isls = slices.begin(); isls != slices.end(); ++isls)
                     newRequests.push_back((*isls));
             }
             requests = newRequests;

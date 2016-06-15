@@ -13,4 +13,5 @@ string ipv4AsHumanReadable(unsigned int ip);
 unsigned int getNetworkFromIp(unsigned int ip);
 bool areSameNetwork(unsigned int ip1,unsigned int ip2);
 bool fileExists(const std::string& name);
+istream& safeGetline(std::istream& is, std::string& t);
 #endif

@@ -18,10 +18,10 @@ void parser::parseFile(char* fileName){
     ifstream myReadFile;
     myReadFile.open(fileName);
     int state = 0;
-    while(!myReadFile.eof()) // To get you all the lines.
+    while(!safeGetline(myReadFile, line).eof())// To get you all the lines.
     {
         //std::cout << "getting line.." << std::endl;
-        getline(myReadFile,line); // Saves the line in line.
+        //getline(myReadFile,line); // Saves the line in line.
         //std::cout << "got line " << line << std::endl;
         if(!line.empty()){
             line = tolowercase(line);
