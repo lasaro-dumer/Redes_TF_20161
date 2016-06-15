@@ -3,6 +3,7 @@
 #include "parser.hpp"
 #include "ipv4.hpp"
 #include "util.hpp"
+#include "ICMPPackage.hpp"
 using namespace std;
 
 int main(int argc, char const *argv[]) {
@@ -50,6 +51,68 @@ int main(int argc, char const *argv[]) {
         std::cout << "Destination node ["<<n2<<"] not found" << std::endl;
         return 1;
     }
+
+    ICMPPackage ping = ICMPPackage::echoRequest(nN1->getIP(),nN2->getIP(),m,8);
+    ping.srcHop_Name = nN1->getName();
+    ping.srcHop_MAC = nN1->getMAC();
+    ping.srcHop_IP = ping.src_IP;
+
+    vector<ICMPPackage> requests;
+    requests.push_back(ping);
+
+    networkElement* current = nN1;
+
+    bool printMac = true;
+    while (current != nullptr) {
+        if(requests.size() > 0){
+            ipv4* dst_IP = requests[0].dst_IP;
+            networkElement* next = nullptr;
+            if(current->hasIP(dst_IP)){
+                ICMPPackage request = ICMPPackage::remountMessage(requests);
+                cout << current->getName() << " rbox " << current->getName() << " : Received "<< request.message <<";" << std::endl;
+                if(request.type == "request"){
+                    ICMPPackage reply = ICMPPackage::echoReply(request.dst_IP,request.src_IP,request.message,8);
+                    reply.srcHop_Name = current->getName();
+                    reply.srcHop_MAC = current->getMacToPort(dst_IP);
+                    reply.srcHop_IP = reply.src_IP;
+                    dst_IP = reply.dst_IP;
+                    requests.clear();
+                    requests.push_back(reply);
+                }else{
+                    break;
+                }
+            }
+            ipv4 next_IP;
+            next = current->getElementOrHopTo(dst_IP,next_IP);
+            string mac = current->getMacFromArpTable(next_IP.getAsBits());
+            if(mac == ""){
+                mac = current->doArpRequest(next,&next_IP,printMac);
+            }
+            int mtu = current->getMtuToNextHop(dst_IP);
+            mtu = 0;//TODO: remove this line after proper slice and remount methods
+            vector<ICMPPackage> newRequests;
+            vector<ICMPPackage>::iterator ireq;
+            string currName = current->getName();
+            string currMAC = current->getMacToPort(requests[0].srcHop_IP);
+            string nextName = next->getName();
+            string nextMAC = next->getMacToPort(&next_IP);
+            for (ireq = requests.begin(); ireq < requests.end(); ++ireq) {
+                (*ireq).updateDataLinkInfo(currName,currMAC,nextName,nextMAC);
+                //This line print the ICMPPackage (be it request or reply)
+                std::cout << (*ireq).toString() << std::endl;
+                (*ireq).TTL--;
+                vector<ICMPPackage> slices = ICMPPackage::sliceMessage(*ireq,mtu);
+                vector<ICMPPackage>::iterator isls;
+                for (isls = slices.begin(); isls < slices.end(); ++isls)
+                    newRequests.push_back((*isls));
+            }
+            requests = newRequests;
+            current = next;
+        }else{
+            current = nullptr;
+        }
+    }
+
     #ifdef DEBUG
     //PRINT DE PARSED ELEMENTS
     std::cout << "Parsed elements" << endl << std::endl;

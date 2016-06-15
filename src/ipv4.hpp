@@ -8,6 +8,11 @@ private:
     bool bCalculated,bReadable;
     unsigned int asBits;
 public:
+    ipv4(){
+        this->asBits=0;
+        this->bCalculated=false;
+        this->bReadable=false;
+    };
     ipv4(string ip):ip_v4(ip){
         this->asBits=0;
         this->bCalculated=false;
