@@ -4,6 +4,8 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <cmath>
+
 class ICMPPackage {
 private:
 public:
@@ -47,10 +49,10 @@ public:
         int message_s = package.message.size();
         int npackages = ceil(message_s/maxMTU);
 
-        for(int =0;i<npackages;i++){
+        for(int i=0;i<npackages;i++){
             int noffset = i*maxMTU;
-            string nmessage = message.substr(noffset,maxMTU);
-            ICMPPackage ping(src_IP,srcHop_IP,srcHop_MAC,srcHop_Name,dst_IP,dstHop_IP,dstHop_MAC,dstHop_Name,nmessage,type,ttl);
+            string nmessage = package.message.substr(noffset,maxMTU);
+            ICMPPackage ping(package.src_IP,package.srcHop_IP,package.srcHop_MAC,package.srcHop_Name,package.dst_IP,package.dstHop_IP,package.dstHop_MAC,package.dstHop_Name,nmessage,package.type,package.TTL);
             noffset += package.offset;
             ping.offset = noffset;                      
             ping.moreFragments = ((i+1)!=npackages) || package.moreFragments;
