@@ -29,6 +29,7 @@ public:
     int getMtuToNextHop(ipv4* ip);
     ipv4* getIpToNextHop(ipv4* dst_IP);
     string getMacToPort(ipv4* portIP);
+    ipv4* getDefaultIP();
     networkElement* getElementFromLAN(ipv4* src_IP,ipv4* dst_IP);
     string toString();
 };

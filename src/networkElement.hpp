@@ -19,6 +19,7 @@ public:
     virtual int getMtuToNextHop(ipv4* ip){};
     virtual string doArpRequest(networkElement* nextHop,ipv4* dst_IP,bool print){};
     virtual bool hasIP(ipv4* ip){};
+    virtual ipv4* getDefaultIP(){};
     virtual string getMacToPort(ipv4* portIP){};
     virtual string toString(){
         return this->name;

@@ -14,6 +14,10 @@ port* router::getPortByNumber(int pn){
     return nullptr;
 }
 
+ipv4* router::getDefaultIP(){
+    return this->getPortByNumber(0)->getIP();
+}
+
 void router::addPort(port* p) {
     this->ports[p->getPortNumber()]=p;
 }
@@ -53,14 +57,23 @@ void router::connectElement(networkElement* ne){
             //std::cout << "network: "<<ipv4AsHumanReadable(net)  << " for ip: " << p->getIP()->getAsHumanReadable() << std::endl;
             node* n = (node*)ne;
             if(areSameNetwork(net,n->getIP()->getAsBits())){
-                if(networks.find(net) != networks.end()){
-                    networks[net].push_back(ne);
-                }else{
+                if(networks.find(net) == networks.end()){
                     vector<networkElement*> v;
-                    v.push_back(ne);
                     networks[net] = v;
                 }
-                n->setGateway(this);
+                bool alreadyConnected = false;
+                vector<networkElement*>::iterator netEls;
+                for (netEls = networks[net].begin(); netEls != networks[net].end(); ++netEls) {
+                    if((*netEls)->getName() == ne->getName()){
+                        alreadyConnected = true;
+                        break;
+                    }
+                }
+                if(!alreadyConnected)
+                    networks[net].push_back(ne);
+                ipv4* ipGateway = new ipv4(n->getGatewayIP());
+                if(ipGateway->getAsBits() == p->getIP()->getAsBits())
+                    n->setGateway(this);
             }
         }
     }else if(ne->getType() == "router"){
@@ -231,7 +244,9 @@ networkElement* router::getElementOrHopTo(ipv4* ip,ipv4& next_IP){
                         }
                 }
                 //failed... return nullptr      , BUT should never get here...
-                std::cout << "Fatal ERROR !!!! :'(" << std::endl;
+                std::cout << "Fatal ERROR !!!! :'( IP: " << ip->getAsHumanReadable() << std::endl;
+                cout << this->toString() << endl;
+                std::cout << "end print" << std::endl;
                 //exit(-1);
                 return nullptr;
             }else{

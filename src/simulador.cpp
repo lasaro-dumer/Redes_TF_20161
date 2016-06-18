@@ -8,11 +8,11 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
     char* file=(char*)"";
-    char* n1 = (char*)"";
-    char* n2 = (char*)"";
-    char* m = (char*)"";
-    node* nN1;
-    node* nN2;
+    string n1 = "";
+    string n2 = "";
+    string m = "";
+    networkElement* nN1;
+    networkElement* nN2;
     parser p;
     /* TEST IF IPS ARE ON SAME NETWORK
     if (argc>3){
@@ -31,8 +31,8 @@ int main(int argc, char const *argv[]) {
         return 1;
     }
     file = (char*)argv[1];
-    n1 = (char*)argv[2];
-    n2 = (char*)argv[3];
+    n1 = tolowercase(argv[2]);
+    n2 = tolowercase(argv[3]);
     m = (char*)argv[4];
 
     if(fileExists(string(file))){
@@ -41,20 +41,21 @@ int main(int argc, char const *argv[]) {
         std::cout << "File doesn't exist" << std::endl;
         return 1;
     }
-    nN1 = p.getNodeByName(n1);
+    nN1 = p.getElementByName(n1);
     if(nN1 == nullptr){
-        std::cout << "Source node ["<<n1<<"] not found" << std::endl;
+        std::cout << "Source element ["<<n1<<"] not found" << std::endl;
         return 1;
     }
-    nN2 = p.getNodeByName(n2);
+    nN2 = p.getElementByName(n2);
     if(nN2 == nullptr){
-        std::cout << "Destination node ["<<n2<<"] not found" << std::endl;
+        std::cout << "Destination element ["<<n2<<"] not found" << std::endl;
         return 1;
     }
-
-    ICMPPackage ping = ICMPPackage::echoRequest(nN1->getIP(),nN2->getIP(),m,8);
+    ipv4* src_IP = nN1->getDefaultIP();
+    ipv4* dst_IP = nN2->getDefaultIP();
+    ICMPPackage ping = ICMPPackage::echoRequest(src_IP,dst_IP,m,8);
     ping.srcHop_Name = nN1->getName();
-    ping.srcHop_MAC = nN1->getMAC();
+    ping.srcHop_MAC = nN1->getMacToPort(src_IP);
     ping.srcHop_IP = ping.src_IP;
 
     vector<ICMPPackage> requests;

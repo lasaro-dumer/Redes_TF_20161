@@ -113,11 +113,10 @@ void parser::tuneNetwork(){
             }
         }else if((*noi)->getType()=="router"){
             router* r = ((router*)*noi);
-            vector<router*> rs = this->getRouters();
-            vector<router*>::iterator rsi;
-            for (rsi = rs.begin(); rsi != rs.end(); ++rsi) {
-                if(r->getName() != (*rsi)->getName())
-                    r->connectElement(*rsi);
+            vector<networkElement*>::iterator noi2;
+            for (noi2 = this->networkObjects.begin(); noi2 != this->networkObjects.end(); ++noi2) {
+                if(r->getName() != (*noi2)->getName())
+                    r->connectElement(*noi2);
             }
         }
     }

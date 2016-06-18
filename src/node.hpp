@@ -28,6 +28,7 @@ public:
 	string doArpRequest(networkElement* nextHop,ipv4* dst_IP,bool print);
 	int getMtuToNextHop(ipv4* ip){ return p->getMTU(); }
 	string getMacToPort(ipv4* portIP);
+	ipv4* getDefaultIP(){ return this->getIP(); }
 	int getMTU(void){ return this->p->getMTU(); }
 	string getGatewayIP(void) { return this->gateway; }
 	networkElement* setGateway(networkElement* gatewayObject){ this->gatewayObj = gatewayObject;}
