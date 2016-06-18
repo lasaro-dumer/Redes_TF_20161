@@ -90,7 +90,6 @@ int main(int argc, char const *argv[]) {
                 mac = current->doArpRequest(next,&next_IP,printMac);
             }
             int mtu = current->getMtuToNextHop(dst_IP);
-            mtu = 0;//TODO: remove this line after proper slice and remount methods
             vector<ICMPPackage> newRequests;
             vector<ICMPPackage>::iterator ireq;
             string currName = current->getName();
@@ -99,13 +98,14 @@ int main(int argc, char const *argv[]) {
             string nextMAC = next->getMacToPort(&next_IP);
             for (ireq = requests.begin(); ireq != requests.end(); ++ireq) {
                 (*ireq).updateDataLinkInfo(currName,currMAC,nextName,nextMAC);
-                //This line print the ICMPPackage (be it request or reply)
-                std::cout << (*ireq).toString() << std::endl;
-                (*ireq).TTL--;
                 vector<ICMPPackage> slices = ICMPPackage::sliceMessage(*ireq,mtu);
                 vector<ICMPPackage>::iterator isls;
-                for (isls = slices.begin(); isls != slices.end(); ++isls)
+                for (isls = slices.begin(); isls != slices.end(); ++isls){
+                    //This line print the ICMPPackage (be it request or reply)
+                    std::cout << (*isls).toString() << std::endl;
+                    (*isls).TTL--;
                     newRequests.push_back((*isls));
+                }
             }
             requests = newRequests;
             current = next;

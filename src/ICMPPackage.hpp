@@ -2,6 +2,8 @@
 #define ICMPPackageH
 #include "ipv4.hpp"
 #include <string>
+#include <iostream>
+#include <algorithm>
 #include <sstream>
 #include <vector>
 #include <cmath>
@@ -39,14 +41,18 @@ public:
         return reply;
     }
 
+    static bool compare(ICMPPackage i,ICMPPackage j){
+        return i.offset < j.offset;
+    }
+
     static ICMPPackage remountMessage(vector<ICMPPackage> packages){
         stringstream ss;
         int npackages = packages.size();
-        for(int i =0;i<=npackages;i++){
-            ICMPPackage auxpackage = packages[i];
-            if(auxpackage.moreFragments==true){
-                ss << auxpackage.message;
-            }
+        // using function as comp
+        std::sort(packages.begin(), packages.end(), ICMPPackage::compare);
+        for(int i =0;i<npackages;i++){
+            ICMPPackage* auxpackage = &packages[i];
+            ss << auxpackage->message;
         }
         ICMPPackage ping(packages[0].src_IP,packages[0].srcHop_IP,packages[0].srcHop_MAC,packages[0].srcHop_Name,packages[0].dst_IP,packages[0].dstHop_IP,packages[0].dstHop_MAC,packages[0].dstHop_Name,ss.str(),packages[0].type,packages[0].TTL);
         return ping;
@@ -56,18 +62,23 @@ public:
         vector<ICMPPackage> packages;
 
         int message_s = package.message.size();
-        int npackages = ceil(message_s/maxMTU);
-
+        int npackages = ceil((message_s*1.0)/(maxMTU*1.0));
         for(int i=0;i<npackages;i++){
             int noffset = i*maxMTU;
             string nmessage = package.message.substr(noffset,maxMTU);
             ICMPPackage ping(package.src_IP,package.srcHop_IP,package.srcHop_MAC,package.srcHop_Name,package.dst_IP,package.dstHop_IP,package.dstHop_MAC,package.dstHop_Name,nmessage,package.type,package.TTL);
             noffset += package.offset;
-            ping.offset = noffset;                      
+            ping.offset = noffset;
             ping.moreFragments = ((i+1)!=npackages) || package.moreFragments;
             packages.push_back(ping);
         }
-
+        #ifdef DEBUG
+        std::cout << "packages="<<packages.size() << std::endl;
+        vector<ICMPPackage>::iterator ipkg;
+        for (ipkg = packages.begin(); ipkg != packages.end(); ++ipkg) {
+            std::cout << "package[]="<<(*ipkg).toString() << std::endl;
+        }
+        #endif
         return packages;
     }
 
