@@ -40,7 +40,16 @@ public:
     }
 
     static ICMPPackage remountMessage(vector<ICMPPackage> packages){
-            //TODO
+        stringstream ss;
+        int npackages = packages.size();
+        for(int i =0;i<=npackages;i++){
+            ICMPPackage auxpackage = packages[i];
+            if(auxpackage.moreFragments==true){
+                ss << auxpackage.message;
+            }
+        }
+        ICMPPackage ping(packages[0].src_IP,packages[0].srcHop_IP,packages[0].srcHop_MAC,packages[0].srcHop_Name,packages[0].dst_IP,packages[0].dstHop_IP,packages[0].dstHop_MAC,packages[0].dstHop_Name,ss.str(),packages[0].type,packages[0].TTL);
+        return ping;
     }
 
     static vector<ICMPPackage> sliceMessage(ICMPPackage package,int maxMTU){
