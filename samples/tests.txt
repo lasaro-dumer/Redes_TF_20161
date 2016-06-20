@@ -1,0 +1,9 @@
+simulador topo1.txt a b redes
+simulador topo1.txt b c redes
+simulador topo1.txt a b computador
+simulador topo1.txt b c computador
+simulador topo2.txt a b computador
+simulador topo2.txt b c computador
+simulador topo2.txt a d computador
+simulador topo3.txt a b computador
+simulador topo3.txt b a computador
